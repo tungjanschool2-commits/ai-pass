@@ -49,6 +49,12 @@ body {
   font-size: 14px;
   margin-bottom: 24px;
 }
+.gate-school-info {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+  margin: -14px 0 20px;
+}
 .gate-card input {
   width: 100%;
   padding: 14px 16px;
@@ -94,6 +100,12 @@ body {
   display: flex;
   gap: 8px;
 }
+.developer-credit {
+  margin-left: auto;
+  color: #cbd5e1;
+  font-size: 12px;
+  white-space: nowrap;
+}
 .topbar .tab {
   background: transparent;
   color: #cbd5e1;
@@ -123,6 +135,9 @@ body {
 @media (max-width: 960px) {
   .app {
     grid-template-columns: 1fr;
+  }
+  .developer-credit {
+    display: none;
   }
 }
 

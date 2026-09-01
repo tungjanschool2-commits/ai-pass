@@ -30,8 +30,8 @@ export async function POST(req) {
     } = body || {};
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    // เปลี่ยนชื่อโมเดลได้ที่ env GEMINI_MODEL (ค่าเริ่มต้น = gemini-2.5-flash)
-    const modelName = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+    // เปลี่ยนชื่อโมเดลได้ที่ env GEMINI_MODEL (ค่าเริ่มต้น = gemini-3.6-flash)
+    const modelName = process.env.GEMINI_MODEL || 'gemini-3.6-flash';
     const model = genAI.getGenerativeModel({ model: modelName });
 
     const imagesNote =

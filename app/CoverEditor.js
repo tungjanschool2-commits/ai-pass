@@ -107,8 +107,10 @@ export default function CoverEditor() {
   const [name, setName] = useState('');
   const [nameNote, setNameNote] = useState('');
   const [position, setPosition] = useState('');
-  const [schoolName, setSchoolName] = useState('');
-  const [schoolInfo, setSchoolInfo] = useState('');
+  const [schoolName, setSchoolName] = useState('โรงเรียนวัดทุ่งจาน');
+  const [schoolInfo, setSchoolInfo] = useState(
+    'อำเภอปักธงชัย จังหวัดนครราชสีมา\nสำนักงานเขตพื้นที่การศึกษาประถมศึกษานครราชสีมา เขต 3'
+  );
   const [quote, setQuote] = useState('');
   const [themeColor, setThemeColor] = useState('#9b5a4a');
   const [designPrompt, setDesignPrompt] = useState('');

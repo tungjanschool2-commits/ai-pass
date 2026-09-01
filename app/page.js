@@ -6,6 +6,10 @@ import BannerEditor from './BannerEditor';
 import CoverEditor from './CoverEditor';
 
 const APP_PASSWORD = process.env.NEXT_PUBLIC_APP_PASSWORD || '044357246';
+const SCHOOL_NAME = 'โรงเรียนวัดทุ่งจาน';
+const SCHOOL_INFO =
+  'อำเภอปักธงชัย จังหวัดนครราชสีมา • สำนักงานเขตพื้นที่การศึกษาประถมศึกษานครราชสีมา เขต 3';
+const DEVELOPER_NAME = 'ครูโสภิตรา จิตชู';
 
 const PRESET_COLORS = [
   '#0b6b3a', // เขียว
@@ -87,7 +91,8 @@ export default function Home() {
       <div className="gate">
         <form className="gate-card" onSubmit={tryUnlock}>
           <h1>🏫 สร้างอินโฟกราฟิก A4</h1>
-          <p>โรงเรียนวัดทุ่งจาน • กรุณาใส่รหัสเข้าใช้งาน</p>
+          <p>{SCHOOL_NAME} • กรุณาใส่รหัสเข้าใช้งาน</p>
+          <div className="gate-school-info">{SCHOOL_INFO}</div>
           <input
             type="password"
             inputMode="numeric"
@@ -117,7 +122,7 @@ function AppShell() {
   return (
     <div className="shell">
       <div className="topbar">
-        <div className="brand">🏫 ระบบสร้างสื่อ โรงเรียน</div>
+        <div className="brand">🏫 ระบบสร้างสื่อ {SCHOOL_NAME}</div>
         <div className="tabs">
           <button
             className={`tab ${mode === 'info' ? 'active' : ''}`}
@@ -138,6 +143,7 @@ function AppShell() {
             📕 ปกรายงาน
           </button>
         </div>
+        <div className="developer-credit">พัฒนาระบบโดย {DEVELOPER_NAME}</div>
       </div>
       {mode === 'info' && <Editor />}
       {mode === 'banner' && <BannerEditor />}
@@ -148,8 +154,8 @@ function AppShell() {
 
 function Editor() {
   // ----- ส่วนหัวกระดาษ -----
-  const [schoolName, setSchoolName] = useState('โรงเรียนวัดทุ่งจาน');
-  const [subLine, setSubLine] = useState('สพป.นครราชสีมา เขต 3');
+  const [schoolName, setSchoolName] = useState(SCHOOL_NAME);
+  const [subLine, setSubLine] = useState(SCHOOL_INFO);
   const [logo, setLogo] = useState(null);
 
   // ----- เนื้อหา -----
@@ -493,7 +499,7 @@ function Editor() {
             </div>
 
             <div className="ig-footer">
-              จัดทำโดย {schoolName} • สร้างด้วยระบบอินโฟกราฟิก AI
+              จัดทำโดย {schoolName} • พัฒนาระบบโดย {DEVELOPER_NAME}
             </div>
           </div>
         </div>

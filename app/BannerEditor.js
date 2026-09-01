@@ -24,7 +24,7 @@ function readFileAsDataURL(file) {
 
 // ----- ป้ายตัวอย่าง (เดโม) ใช้ได้โดยไม่ต้องมี API key -----
 const SAMPLE = {
-  schoolName: 'โรงเรียนบ้านสุขัง(ราษฎร์สามัคคี)',
+  schoolName: 'โรงเรียนวัดทุ่งจาน',
   headline: 'ขอแสดงความยินดี',
   name: 'นางจุไรรัตน์ วอนพรมราช',
   position: 'ผู้อำนวยการโรงเรียนบ้านสุขัง(ราษฎร์สามัคคี)',
@@ -76,7 +76,7 @@ const SAMPLE = {
 };
 
 export default function BannerEditor() {
-  const [schoolName, setSchoolName] = useState('โรงเรียนบ้านสุขัง(ราษฎร์สามัคคี)');
+  const [schoolName, setSchoolName] = useState('โรงเรียนวัดทุ่งจาน');
   const [headline, setHeadline] = useState('ขอแสดงความยินดี');
   const [name, setName] = useState('');
   const [position, setPosition] = useState('');
