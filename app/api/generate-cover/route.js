@@ -57,7 +57,7 @@ export async function POST(req) {
 ข้อกำหนดผลลัพธ์ (สำคัญมาก ทำตามเคร่งครัด):
 1. ตอบเป็น HTML fragment เท่านั้น เริ่มด้วย <style> ตามด้วย <div class="cover-content"> ... </div> ห้ามมี \`\`\`, ห้ามมี <html>/<head>/<body>, ห้ามอธิบาย
 2. selector ทุกตัวใน <style> ต้องขึ้นต้นด้วย .cover-content
-3. ".cover-content" ต้องกำหนด width:794px; height:1123px; position:relative; overflow:hidden; box-sizing:border-box; font-family:'Kanit','Sarabun',sans-serif;
+3. ".cover-content" ต้องกำหนด width:794px; height:1123px; position:relative; overflow:hidden; box-sizing:border-box; font-family:'TH SarabunPSK','TH Sarabun New','Sarabun',sans-serif;
 4. ต้องมีชั้นพื้นหลังรูปภาพเต็มหน้า: สร้าง <div class="bg">[[PHOTO]]</div> วางเป็นชั้นล่างสุด (position:absolute;inset:0;z-index:0) ให้รูปเต็มพื้นที่แบบ object-fit:cover
 5. ต้องมีชั้น overlay ไล่เฉดสี (position:absolute;inset:0;z-index:1) ทำให้ "ฝั่งซ้าย" ทึบพอให้อ่านตัวอักษรได้ชัด และ "ฝั่งขวา" โปร่งเพื่อโชว์รูปบุคคล
 6. ตัวอักษรและองค์ประกอบทั้งหมดอยู่ z-index:2 ขึ้นไป จัดวางตามนี้:

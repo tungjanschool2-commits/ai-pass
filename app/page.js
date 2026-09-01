@@ -30,13 +30,13 @@ const SAMPLE = {
   designPrompt: 'โทนสดใส เหมาะกับนักเรียน แบ่งเป็นการ์ด 4 ข้อ มีไอคอน',
   themeColor: '#0b6b3a',
   html: `<style>
-    .ig-content{font-family:'Sarabun','Kanit',sans-serif;color:#1f2937;}
-    .ig-content .ig-title{background:var(--paper-brand,#0b6b3a);color:#fff;font-family:'Kanit',sans-serif;font-size:38px;font-weight:800;text-align:center;padding:18px 20px;border-radius:16px;margin-bottom:14px;}
+    .ig-content{font-family:'TH SarabunPSK','TH Sarabun New','Sarabun',sans-serif;color:#1f2937;}
+    .ig-content .ig-title{background:var(--paper-brand,#0b6b3a);color:#fff;font-family:'TH SarabunPSK','TH Sarabun New','Sarabun',sans-serif;font-size:38px;font-weight:800;text-align:center;padding:18px 20px;border-radius:16px;margin-bottom:14px;}
     .ig-content .ig-lead{font-size:20px;text-align:center;color:#374151;margin-bottom:22px;line-height:1.5;}
     .ig-content .ig-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
     .ig-content .ig-card{border:2px solid #eef2f7;border-left:8px solid var(--paper-brand,#0b6b3a);border-radius:14px;padding:18px 20px;background:#fbfdfb;box-shadow:0 4px 12px rgba(0,0,0,.05);}
-    .ig-content .ig-card .num{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--paper-brand,#0b6b3a);color:#fff;font-family:'Kanit',sans-serif;font-size:24px;font-weight:800;margin-bottom:10px;}
-    .ig-content .ig-card h3{font-family:'Kanit',sans-serif;font-size:24px;color:var(--paper-brand,#0b6b3a);margin-bottom:6px;}
+    .ig-content .ig-card .num{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--paper-brand,#0b6b3a);color:#fff;font-family:'TH SarabunPSK','TH Sarabun New','Sarabun',sans-serif;font-size:24px;font-weight:800;margin-bottom:10px;}
+    .ig-content .ig-card h3{font-family:'TH SarabunPSK','TH Sarabun New','Sarabun',sans-serif;font-size:24px;color:var(--paper-brand,#0b6b3a);margin-bottom:6px;}
     .ig-content .ig-card p{font-size:18px;line-height:1.55;color:#374151;}
     .ig-content .ig-note{margin-top:22px;background:#fff7ed;border:2px dashed #fb923c;border-radius:14px;padding:16px 20px;font-size:19px;text-align:center;color:#9a3412;font-weight:600;}
   </style>
@@ -156,7 +156,10 @@ function Editor() {
   // ----- ส่วนหัวกระดาษ -----
   const [schoolName, setSchoolName] = useState(SCHOOL_NAME);
   const [subLine, setSubLine] = useState(SCHOOL_INFO);
+  const [workHeading, setWorkHeading] = useState('');
   const [logo, setLogo] = useState(null);
+  const [backgroundImage, setBackgroundImage] = useState(null);
+  const [backgroundOpacity, setBackgroundOpacity] = useState(0.16);
 
   // ----- เนื้อหา -----
   const [title, setTitle] = useState('');
@@ -194,6 +197,12 @@ function Editor() {
     const file = e.target.files?.[0];
     if (!file) return;
     setLogo(await readFileAsDataURL(file));
+  }
+
+  async function onBackgroundChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setBackgroundImage(await readFileAsDataURL(file));
   }
 
   async function onImagesChange(e) {
@@ -354,8 +363,47 @@ function Editor() {
         </div>
 
         <div className="field">
+          <label>หัวงาน / ชื่อหน่วยงาน</label>
+          <input
+            type="text"
+            value={workHeading}
+            onChange={(e) => setWorkHeading(e.target.value)}
+            placeholder="เช่น งานประชาสัมพันธ์ • ฝ่ายวิชาการ"
+          />
+        </div>
+
+        <div className="field">
           <label>โลโก้โรงเรียน (PNG/JPG)</label>
           <input type="file" accept="image/png,image/jpeg" onChange={onLogoChange} />
+        </div>
+
+        <div className="field">
+          <label>ภาพพื้นหลังกระดาษ A4 (PNG/JPG)</label>
+          <input type="file" accept="image/png,image/jpeg" onChange={onBackgroundChange} />
+          {backgroundImage && (
+            <>
+              <div className="background-controls">
+                <label htmlFor="background-opacity">ความเข้มพื้นหลัง</label>
+                <input
+                  id="background-opacity"
+                  type="range"
+                  min="0.05"
+                  max="0.55"
+                  step="0.05"
+                  value={backgroundOpacity}
+                  onChange={(e) => setBackgroundOpacity(Number(e.target.value))}
+                />
+                <span>{Math.round(backgroundOpacity * 100)}%</span>
+              </div>
+              <button
+                type="button"
+                className="remove-background"
+                onClick={() => setBackgroundImage(null)}
+              >
+                ลบภาพพื้นหลัง
+              </button>
+            </>
+          )}
         </div>
 
         <div className="field">
@@ -472,6 +520,13 @@ function Editor() {
           style={{ transform: `scale(${scale})`, height: 1123 * scale }}
         >
           <div className="a4" ref={a4Ref} style={{ '--paper-brand': themeColor }}>
+            {backgroundImage && (
+              <div
+                className="a4-background"
+                style={{ backgroundImage: `url(${backgroundImage})`, opacity: backgroundOpacity }}
+                aria-hidden="true"
+              />
+            )}
             {/* หัวกระดาษ */}
             <div className="ig-header">
               {logo ? (
@@ -482,6 +537,7 @@ function Editor() {
               <div className="ig-school">
                 <div className="name">{schoolName}</div>
                 {subLine && <div className="subline">{subLine}</div>}
+                {workHeading && <div className="work-heading">{workHeading}</div>}
               </div>
             </div>
 

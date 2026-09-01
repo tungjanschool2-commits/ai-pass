@@ -34,7 +34,7 @@ const SAMPLE = {
   themeColor: '#0b2e6b',
   designPrompt: 'โทนน้ำเงินหรูหรา ลวดลายเทคโนโลยี ประดับทอง',
   html: `<style>
-  .banner-content{width:1000px;height:720px;position:relative;overflow:hidden;box-sizing:border-box;font-family:'Kanit','Sarabun',sans-serif;background:radial-gradient(120% 100% at 80% 10%,#1e4d9b 0%,#0b2e6b 45%,#071f4a 100%);}
+  .banner-content{width:1000px;height:720px;position:relative;overflow:hidden;box-sizing:border-box;font-family:'TH SarabunPSK','TH Sarabun New','Sarabun',sans-serif;background:radial-gradient(120% 100% at 80% 10%,#1e4d9b 0%,#0b2e6b 45%,#071f4a 100%);}
   .banner-content .deco-1{position:absolute;inset:0;background:
      radial-gradient(circle at 15% 85%,rgba(255,255,255,.06),transparent 25%),
      radial-gradient(circle at 70% 20%,rgba(120,180,255,.12),transparent 30%);}

@@ -38,7 +38,7 @@ const SAMPLE = {
   themeColor: '#9b5a4a',
   designPrompt: 'โทนอบอุ่นสีชมพูเบจ หรูหรา ทางการ',
   html: `<style>
-  .cover-content{width:794px;height:1123px;position:relative;overflow:hidden;box-sizing:border-box;font-family:'Kanit','Sarabun',sans-serif;background:linear-gradient(135deg,#f5e6dd 0%,#ecd0c3 55%,#dcb4a4 100%);}
+  .cover-content{width:794px;height:1123px;position:relative;overflow:hidden;box-sizing:border-box;font-family:'TH SarabunPSK','TH Sarabun New','Sarabun',sans-serif;background:linear-gradient(135deg,#f5e6dd 0%,#ecd0c3 55%,#dcb4a4 100%);}
   .cover-content .bg{position:absolute;inset:0;z-index:0;}
   .cover-content .bg img{width:100%;height:100%;object-fit:cover;object-position:center top;}
   .cover-content .bg-ph{width:100%;height:100%;display:flex;align-items:flex-end;justify-content:flex-end;font-size:220px;opacity:.18;padding-right:40px;}

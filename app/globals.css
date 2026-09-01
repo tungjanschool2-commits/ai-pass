@@ -15,7 +15,7 @@
 }
 
 body {
-  font-family: 'Sarabun', 'Kanit', -apple-system, sans-serif;
+  font-family: 'TH SarabunPSK', 'TH Sarabun New', 'Sarabun', sans-serif;
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
@@ -92,7 +92,7 @@ body {
   padding: 0 18px;
 }
 .topbar .brand {
-  font-family: 'Kanit', sans-serif;
+  font-family: 'TH SarabunPSK', 'TH Sarabun New', 'Sarabun', sans-serif;
   font-weight: 600;
   font-size: 16px;
 }
@@ -318,6 +318,17 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+  font-family: 'TH SarabunPSK', 'TH Sarabun New', 'Sarabun', sans-serif;
+}
+.a4-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  pointer-events: none;
 }
 
 /* ส่วนหัวกระดาษ (คุมเองให้เป๊ะทุกใบ) */
@@ -328,6 +339,9 @@ body {
   padding: 22px 28px;
   border-bottom: 5px solid var(--paper-brand, #0b6b3a);
   background: #ffffff;
+  position: relative;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 .ig-logo {
   width: 78px;
@@ -354,11 +368,21 @@ body {
   flex: 1;
 }
 .ig-school .name {
-  font-family: 'Kanit', sans-serif;
+  font-family: 'TH SarabunPSK', 'TH Sarabun New', 'Sarabun', sans-serif;
   font-size: 27px;
   font-weight: 700;
   color: var(--paper-brand, #0b6b3a);
   line-height: 1.15;
+}
+.ig-school .work-heading {
+  display: inline-block;
+  margin-top: 7px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--paper-brand, #0b6b3a);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
 }
 .ig-school .subline {
   font-size: 16px;
@@ -370,6 +394,9 @@ body {
 .ig-content-wrap {
   padding: 20px 28px 28px;
   flex: 1;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.72);
 }
 .ig-content img,
 .ig-img {
@@ -432,4 +459,34 @@ body {
   font-size: 12px;
   color: #94a3b8;
   text-align: right;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.background-controls {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.background-controls label {
+  margin: 0;
+  font-weight: 500;
+}
+.background-controls input[type='range'] {
+  width: 100%;
+  accent-color: var(--brand);
+}
+.remove-background {
+  margin-top: 6px;
+  border: 0;
+  background: transparent;
+  color: #b91c1c;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
 }
