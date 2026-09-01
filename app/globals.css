@@ -1,0 +1,420 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --brand: #0b6b3a;
+  --brand-dark: #084d29;
+  --bg: #eef1f4;
+  --panel: #ffffff;
+  --border: #dde3ea;
+  --text: #1f2937;
+  --muted: #6b7280;
+}
+
+body {
+  font-family: 'Sarabun', 'Kanit', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- หน้าล็อกอิน ---------- */
+.gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.gate-card {
+  background: var(--panel);
+  border-radius: 20px;
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+.gate-card h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--brand-dark);
+  margin-bottom: 6px;
+}
+.gate-card p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.gate-card input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 18px;
+  text-align: center;
+  letter-spacing: 4px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 14px;
+  outline: none;
+}
+.gate-card input:focus {
+  border-color: var(--brand);
+}
+.gate-err {
+  color: #dc2626;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* ---------- โครงหลัก + แถบสลับโหมด ---------- */
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.topbar {
+  height: 56px;
+  flex-shrink: 0;
+  background: #0f172a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 18px;
+}
+.topbar .brand {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+}
+.topbar .tabs {
+  display: flex;
+  gap: 8px;
+}
+.topbar .tab {
+  background: transparent;
+  color: #cbd5e1;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.topbar .tab:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.topbar .tab.active {
+  background: #10b981;
+  color: #fff;
+}
+
+/* ---------- เลย์เอาต์หลัก ---------- */
+.app {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  flex: 1;
+  min-height: 0;
+}
+@media (max-width: 960px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sidebar {
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 22px;
+  overflow-y: auto;
+  max-height: 100%;
+}
+.sidebar h2 {
+  font-size: 18px;
+  color: var(--brand-dark);
+  margin-bottom: 2px;
+}
+.sidebar .sub {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #374151;
+}
+.field input[type='text'],
+.field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  resize: vertical;
+}
+.field input[type='text']:focus,
+.field textarea:focus {
+  border-color: var(--brand);
+}
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.color-row input[type='color'] {
+  width: 46px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2px;
+  background: #fff;
+}
+.swatches {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--border);
+  cursor: pointer;
+}
+
+.thumbs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.thumb {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.thumb button {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 12px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+}
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+}
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn-outline {
+  background: #fff;
+  color: var(--brand-dark);
+  border: 2px solid var(--brand);
+}
+.btn-ghost {
+  background: #f3f4f6;
+  color: #374151;
+}
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+.btn-row .btn {
+  margin-top: 0;
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+.error-box {
+  background: #fef2f2;
+  color: #b91c1c;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+/* ---------- พื้นที่พรีวิว ---------- */
+.canvas-area {
+  padding: 26px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.a4-scale {
+  transform-origin: top center;
+}
+
+/* กระดาษ A4 = 794 x 1123 px @96dpi */
+.a4 {
+  width: 794px;
+  min-height: 1123px;
+  background: #fff;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ส่วนหัวกระดาษ (คุมเองให้เป๊ะทุกใบ) */
+.ig-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 28px;
+  border-bottom: 5px solid var(--paper-brand, #0b6b3a);
+  background: #ffffff;
+}
+.ig-logo {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: #fff;
+  flex-shrink: 0;
+}
+.ig-logo-placeholder {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 2px dashed #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-size: 11px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.ig-school {
+  flex: 1;
+}
+.ig-school .name {
+  font-family: 'Kanit', sans-serif;
+  font-size: 27px;
+  font-weight: 700;
+  color: var(--paper-brand, #0b6b3a);
+  line-height: 1.15;
+}
+.ig-school .subline {
+  font-size: 16px;
+  color: #475569;
+  margin-top: 2px;
+}
+
+/* ส่วนเนื้อหาที่ Gemini ออกแบบ */
+.ig-content-wrap {
+  padding: 20px 28px 28px;
+  flex: 1;
+}
+.ig-content img,
+.ig-img {
+  max-width: 100%;
+}
+.ig-img {
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  display: block;
+  margin: 8px 0;
+}
+.leftover-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.empty-hint {
+  color: #94a3b8;
+  text-align: center;
+  padding: 80px 20px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ---------- ป้ายแสดงความยินดี ---------- */
+.banner {
+  width: 1000px;
+  height: 720px;
+  background: #fff;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+.banner-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* ---------- ปกรายงาน A4 แนวตั้ง ---------- */
+.cover {
+  width: 794px;
+  height: 1123px;
+  background: #fff;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+/* ฟุตเตอร์เล็ก ๆ */
+.ig-footer {
+  padding: 8px 28px 14px;
+  font-size: 12px;
+  color: #94a3b8;
+  text-align: right;
+}

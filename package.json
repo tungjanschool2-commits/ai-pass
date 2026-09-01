@@ -1,0 +1,21 @@
+{
+  "name": "infographic-a4-generator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "เว็บแอปสร้างอินโฟกราฟิก A4 ด้วย Gemini (ฟรี) - Supabase + Vercel",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "@supabase/supabase-js": "^2.45.4",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
+    "next": "^14.2.35",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
