@@ -369,10 +369,10 @@ body {
 }
 .ig-school .name {
   font-family: 'TH SarabunPSK', 'TH Sarabun New', 'Sarabun', sans-serif;
-  font-size: 27px;
+  font-size: 36px;
   font-weight: 700;
   color: var(--paper-brand, #0b6b3a);
-  line-height: 1.15;
+  line-height: 1.05;
 }
 .ig-school .work-heading {
   display: inline-block;
@@ -381,13 +381,14 @@ body {
   border-radius: 999px;
   background: var(--paper-brand, #0b6b3a);
   color: #fff;
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 700;
 }
 .ig-school .subline {
-  font-size: 16px;
+  font-size: 20px;
   color: #475569;
-  margin-top: 2px;
+  margin-top: 4px;
+  line-height: 1.25;
 }
 
 /* ส่วนเนื้อหาที่ Gemini ออกแบบ */
