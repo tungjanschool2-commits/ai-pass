@@ -15,7 +15,7 @@
 }
 
 body {
-  font-family: 'TH SarabunPSK', 'TH Sarabun New', 'Sarabun', sans-serif;
+  font-family: 'Sarabun', 'Kanit', -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
@@ -92,7 +92,7 @@ body {
   padding: 0 18px;
 }
 .topbar .brand {
-  font-family: 'TH SarabunPSK', 'TH Sarabun New', 'Sarabun', sans-serif;
+  font-family: 'Kanit', sans-serif;
   font-weight: 600;
   font-size: 16px;
 }
