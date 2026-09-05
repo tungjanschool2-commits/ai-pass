@@ -22,6 +22,17 @@ const PRESET_COLORS = [
   '#374151', // เทาเข้ม
 ];
 
+const DECORATIVE_ICONS = ['📚', '🏆', '⭐', '🎓', '🔬', '🧪', '🌱', '♻️', '❤️', '✅', '📣', '💡'];
+
+function isDarkColor(hex) {
+  const value = String(hex || '').replace('#', '');
+  if (value.length !== 6) return false;
+  const r = parseInt(value.slice(0, 2), 16);
+  const g = parseInt(value.slice(2, 4), 16);
+  const b = parseInt(value.slice(4, 6), 16);
+  return (r * 299 + g * 587 + b * 114) / 1000 < 145;
+}
+
 // ----- เนื้อหาตัวอย่าง (เดโม) แสดงผลได้โดยไม่ต้องมี API key -----
 const SAMPLE = {
   title: '4 ป. ป้องกันไข้เลือดออก',
@@ -59,6 +70,23 @@ function readFileAsDataURL(file) {
     reader.onload = () => resolve(reader.result);
     reader.onerror = reject;
     reader.readAsDataURL(file);
+  });
+}
+
+function resizeLogoForStorage(dataUrl, maxSize = 320) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => {
+      const scale = Math.min(1, maxSize / Math.max(image.width, image.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(image.width * scale));
+      canvas.height = Math.max(1, Math.round(image.height * scale));
+      const context = canvas.getContext('2d');
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      resolve(canvas.toDataURL('image/png'));
+    };
+    image.onerror = reject;
+    image.src = dataUrl;
   });
 }
 
@@ -158,6 +186,10 @@ function Editor() {
   const [subLine, setSubLine] = useState(SCHOOL_INFO);
   const [workHeading, setWorkHeading] = useState('');
   const [logo, setLogo] = useState(null);
+  const [savedLogos, setSavedLogos] = useState([]);
+  const [decorativeIcons, setDecorativeIcons] = useState([]);
+  const [headerColor, setHeaderColor] = useState('#ffffff');
+  const [footerColor, setFooterColor] = useState('#ffffff');
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [backgroundOpacity, setBackgroundOpacity] = useState(0.16);
 
@@ -179,6 +211,13 @@ function Editor() {
   const a4Ref = useRef(null);
   const scaleWrapRef = useRef(null);
 
+  useEffect(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem('ig_saved_logos') || '[]');
+      if (Array.isArray(stored)) setSavedLogos(stored.filter((item) => typeof item === 'string'));
+    } catch {}
+  }, []);
+
   // ปรับ scale ให้กระดาษ A4 พอดีความกว้างจอ
   useEffect(() => {
     function fit() {
@@ -196,7 +235,43 @@ function Editor() {
   async function onLogoChange(e) {
     const file = e.target.files?.[0];
     if (!file) return;
-    setLogo(await readFileAsDataURL(file));
+    try {
+      const dataUrl = await readFileAsDataURL(file);
+      setLogo(await resizeLogoForStorage(dataUrl));
+    } catch {
+      setError('อ่านไฟล์โลโก้ไม่สำเร็จ กรุณาใช้ไฟล์ PNG หรือ JPG');
+    }
+  }
+
+  function saveCurrentLogo() {
+    if (!logo) {
+      setError('กรุณาเลือกโลโก้ก่อนบันทึก');
+      return;
+    }
+    try {
+      const next = [logo, ...savedLogos.filter((item) => item !== logo)].slice(0, 8);
+      localStorage.setItem('ig_saved_logos', JSON.stringify(next));
+      setSavedLogos(next);
+      setSavedMsg('บันทึกโลโก้ไว้ในเครื่องนี้แล้ว ✓');
+      setError('');
+    } catch {
+      setError('พื้นที่บันทึกโลโก้เต็ม กรุณาลบโลโก้เก่าบางรายการ');
+    }
+  }
+
+  function removeSavedLogo(index) {
+    const next = savedLogos.filter((_, itemIndex) => itemIndex !== index);
+    try {
+      localStorage.setItem('ig_saved_logos', JSON.stringify(next));
+    } catch {}
+    setSavedLogos(next);
+  }
+
+  function toggleDecorativeIcon(icon) {
+    setDecorativeIcons((current) => {
+      if (current.includes(icon)) return current.filter((item) => item !== icon);
+      return current.length < 6 ? [...current, icon] : current;
+    });
   }
 
   async function onBackgroundChange(e) {
@@ -375,6 +450,51 @@ function Editor() {
         <div className="field">
           <label>โลโก้โรงเรียน (PNG/JPG)</label>
           <input type="file" accept="image/png,image/jpeg" onChange={onLogoChange} />
+          {logo && (
+            <div className="logo-actions">
+              <button type="button" onClick={saveCurrentLogo}>💾 บันทึกโลโก้นี้</button>
+              <button type="button" onClick={() => setLogo(null)}>ไม่ใช้โลโก้</button>
+            </div>
+          )}
+          {savedLogos.length > 0 && (
+            <div className="saved-logo-section">
+              <div className="mini-label">เลือกจากโลโก้ที่บันทึกไว้ในเครื่องนี้</div>
+              <div className="saved-logo-grid">
+                {savedLogos.map((savedLogo, index) => (
+                  <div className={`saved-logo ${logo === savedLogo ? 'selected' : ''}`} key={index}>
+                    <button type="button" onClick={() => setLogo(savedLogo)} title="ใช้โลโก้นี้">
+                      <img src={savedLogo} alt={`โลโก้ที่บันทึก ${index + 1}`} />
+                    </button>
+                    <button
+                      type="button"
+                      className="delete-saved-logo"
+                      onClick={() => removeSavedLogo(index)}
+                      title="ลบโลโก้ที่บันทึก"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="field">
+          <label>ไอคอนตกแต่งหัวกระดาษ (เลือกได้สูงสุด 6 รูป)</label>
+          <div className="icon-picker">
+            {DECORATIVE_ICONS.map((icon) => (
+              <button
+                key={icon}
+                type="button"
+                className={decorativeIcons.includes(icon) ? 'selected' : ''}
+                onClick={() => toggleDecorativeIcon(icon)}
+                aria-label={`ไอคอน ${icon}`}
+              >
+                {icon}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="field">
@@ -459,6 +579,28 @@ function Editor() {
         </div>
 
         <div className="field">
+          <label>สีหัวกระดาษและท้ายกระดาษ</label>
+          <div className="paper-color-grid">
+            <label>
+              <span>หัวกระดาษ</span>
+              <input
+                type="color"
+                value={headerColor}
+                onChange={(e) => setHeaderColor(e.target.value)}
+              />
+            </label>
+            <label>
+              <span>ท้ายกระดาษ</span>
+              <input
+                type="color"
+                value={footerColor}
+                onChange={(e) => setFooterColor(e.target.value)}
+              />
+            </label>
+          </div>
+        </div>
+
+        <div className="field">
           <label>รูปภาพประกอบ (PNG/JPG • เลือกได้หลายรูป)</label>
           <input
             type="file"
@@ -528,7 +670,14 @@ function Editor() {
               />
             )}
             {/* หัวกระดาษ */}
-            <div className="ig-header">
+            <div
+              className="ig-header"
+              style={{
+                backgroundColor: headerColor,
+                '--header-name-color': isDarkColor(headerColor) ? '#ffffff' : themeColor,
+                '--header-sub-color': isDarkColor(headerColor) ? '#f1f5f9' : '#475569',
+              }}
+            >
               {logo ? (
                 <img className="ig-logo" src={logo} alt="โลโก้" />
               ) : (
@@ -539,6 +688,11 @@ function Editor() {
                 {subLine && <div className="subline">{subLine}</div>}
                 {workHeading && <div className="work-heading">{workHeading}</div>}
               </div>
+              {decorativeIcons.length > 0 && (
+                <div className="ig-decoration-icons" aria-label="ไอคอนตกแต่ง">
+                  {decorativeIcons.map((icon) => <span key={icon}>{icon}</span>)}
+                </div>
+              )}
             </div>
 
             {/* เนื้อหา */}
@@ -554,7 +708,13 @@ function Editor() {
               )}
             </div>
 
-            <div className="ig-footer">
+            <div
+              className="ig-footer"
+              style={{
+                backgroundColor: footerColor,
+                color: isDarkColor(footerColor) ? '#ffffff' : '#64748b',
+              }}
+            >
               จัดทำโดย {schoolName} • พัฒนาระบบโดย {DEVELOPER_NAME}
             </div>
           </div>
